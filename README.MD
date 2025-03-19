@@ -18,6 +18,7 @@ Documentation de la board: [http://www.smartcomputerlab.org/](http://www.smartco
 
 ### 1. Définir des valeurs communes (à faire au tableau)
 
+
 ### 2. Communiquer via mqtt des données
 
 Groupe 1: Envoyer un message mqtt donnant les valeurs nécessaires à une reception via LoRa.
