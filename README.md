@@ -1,4 +1,4 @@
-# Tp_IoT_2022_LoRa_Bluetooth
+## Tp_IoT_2022_LoRa_Bluetooth
 
 Ce TP est à réaliser à deux groupes.
 
