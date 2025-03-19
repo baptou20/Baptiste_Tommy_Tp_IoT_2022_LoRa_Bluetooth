@@ -28,8 +28,11 @@ Groupe 1: Envoyer un message mqtt donnant les valeurs nécessaires à une recept
 Groupe 2. Ecouter les messages mqtt en en déduire les valeurs pour un envoi de données via Lora.
 
 I (5921) baptiste et tommy: Message envoyé avec succès, msg_id=50214
+
 I (6111) mqtt5_client: MQTT_MSG_TYPE_PUBACK return code is 0
+
 I (6121) baptiste et tommy: MQTT_EVENT_PUBLISHED, msg_id=50214
+
 I (7581) example_connect: Got IPv6 event: Interface "example_netif_sta" address: 2a02:8440:715b:a386:ce50:e3ff:fe99:2d50, type: ESP_IP6_ADDR_IS_GLOBAL
 
 ### 3. Communiquer via LoRa des données
