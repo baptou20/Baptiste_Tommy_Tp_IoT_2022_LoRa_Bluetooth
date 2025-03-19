@@ -16,15 +16,40 @@
  #include "protocol_examples_common.h"
  #include "esp_log.h"
  #include "mqtt_client.h"
+ #include <inttypes.h>
+ #include "freertos/FreeRTOS.h"
+ #include "freertos/task.h"
+ #include "esp_log.h"
+ #include "lora.h"
+
  #define WIFI_SSID "iPhone de Baptiste"
  #define WIFI_PASS "baptou20"
  #define MQTT_BROKER_URI "mqtt://test.mosquitto.org"
- #define MQTT_TOPIC "tp/alban"
- #define MQTT_MESSAGE "Hello Tommy et Baptiste"
+ #define MQTT_TOPIC "kbssa"
+ #define MQTT_MESSAGE "kbssa"
  
- static const char *TAG = "baptiste et tommy";
- 
- 
+static const char *TAG = "baptiste et tommy";
+
+#if CONFIG_SENDER
+void task_tx(void *pvParameters)
+{
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
+	uint8_t buf[256]; // Maximum Payload size of SX1276/77/78/79 is 255
+	while(1) {
+		TickType_t nowTick = xTaskGetTickCount();
+		int send_len = sprintf((char *)buf,"Je s'appelle Groot !! %"PRIu32, nowTick);
+		lora_send_packet(buf, send_len);
+		ESP_LOGI(pcTaskGetName(NULL), "%d byte packet sent...", send_len);
+		int lost = lora_packet_lost();
+		if (lost != 0) {
+			ESP_LOGW(pcTaskGetName(NULL), "%d packets lost", lost);
+		}
+		vTaskDelay(pdMS_TO_TICKS(5000));
+	} // end while
+}
+#endif // CONFIG_SENDER
+
+
  // Fonction de gestion des événements Wi-Fi
  static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
      if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_CONNECTED) {
@@ -65,7 +90,6 @@
      ESP_LOGI(TAG, "Connexion au Wi-Fi en cours...");
      return ESP_OK;
  }
- 
  
  
  static void log_error_if_nonzero(const char *message, int error_code)
@@ -264,7 +288,42 @@
  
  void app_main(void)
  {
- 
+    if (lora_init() == 0) {
+		ESP_LOGE(pcTaskGetName(NULL), "Does not recognize the module");
+		while(1) {
+			vTaskDelay(1);
+		}
+	}
+
+	ESP_LOGI(pcTaskGetName(NULL), "Frequency is 866MHz");
+	lora_set_frequency(868e6); // 866MHz
+
+	lora_enable_crc();
+
+	int cr = 1;
+	int bw = 7;
+	int sf = 7;
+
+
+	lora_set_coding_rate(cr);
+	//lora_set_coding_rate(CONFIG_CODING_RATE);
+	//cr = lora_get_coding_rate();
+	ESP_LOGI(pcTaskGetName(NULL), "coding_rate=%d", cr);
+
+	lora_set_bandwidth(bw);
+	//lora_set_bandwidth(CONFIG_BANDWIDTH);
+	//int bw = lora_get_bandwidth();
+	ESP_LOGI(pcTaskGetName(NULL), "bandwidth=%d", bw);
+
+	lora_set_spreading_factor(sf);
+	//lora_set_spreading_factor(CONFIG_SF_RATE);
+	//int sf = lora_get_spreading_factor();
+	ESP_LOGI(pcTaskGetName(NULL), "spreading_factor=%d", sf);
+
+#if CONFIG_SENDER
+	xTaskCreate(&task_tx, "TX", 1024*3, NULL, 5, NULL);
+#endif
+    
      ESP_LOGI(TAG, "[APP] Startup..");
      ESP_LOGI(TAG, "[APP] Free memory: %" PRIu32 " bytes", esp_get_free_heap_size());
      ESP_LOGI(TAG, "[APP] IDF version: %s", esp_get_idf_version());
