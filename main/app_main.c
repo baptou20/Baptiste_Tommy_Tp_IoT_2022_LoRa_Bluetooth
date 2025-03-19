@@ -26,7 +26,7 @@
  #define WIFI_PASS "baptou20"
  #define MQTT_BROKER_URI "mqtt://test.mosquitto.org"
  #define MQTT_TOPIC "kbssa"
- #define MQTT_MESSAGE "kbssa"
+ #define MQTT_MESSAGE "kbssa123"
  
 static const char *TAG = "baptiste et tommy";
 
