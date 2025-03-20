@@ -20,7 +20,9 @@ Le programme se déroule en plusieurs étapes :
    - L'ESP32 récepteur écoute les messages transmis par LoRa.
    - Il vérifie l'authenticité du message en comparant le mot de passe préfixé.
    - Si le message est valide, il affiche
+
 Nous avons testé l'émission / réceptions dans les 2 sens.
+
 4. Capteur
    - Avec la même procédure, mais on ajoute les données du capteur à la suite du mot de passe.
    - On affiches les données du capteurs juste après le mot de passe.
