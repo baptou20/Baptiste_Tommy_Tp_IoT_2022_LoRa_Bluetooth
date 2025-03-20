@@ -2,7 +2,7 @@
 
 **Compte-rendu : Communication ESP32 avec MQTT et LoRa pour un capteur de température**
 
-1. Introduction**
+1. Introduction
 Ce projet met en place un système de communication entre 2 cartes ESP32 dont une équipée d"un capteur. L'objectif est de les faire communiquer via le protocole MQTT et la technologie LoRa. 
 
 Le programme se déroule en plusieurs étapes :
