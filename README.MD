@@ -5,10 +5,9 @@
 1. Introduction**
 Ce projet met en place un système de communication entre 2 cartes ESP32 dont une équipée d"un capteur. L'objectif est de les faire communiquer via le protocole MQTT et la technologie LoRa. 
 
-2. Fonctionnement du programme**
 Le programme se déroule en plusieurs étapes :
 
-1. **Connexion au WiFi et au broker MQTT**
+1. Connexion au WiFi (point mobile avec téléphone) et au broker MQTT
    - L'ESP32 se connecte à un réseau WiFi (iPhone de Baptiste).
    - Il établit une connexion avec le broker MQTT (test.mosquitto.org).
    - Il s'abonne à un topic spécifique pour recevoir et publier des messages. (kbsssa)
