@@ -37,7 +37,7 @@ void task_tx(void *pvParameters)
 	uint8_t buf[256]; // Maximum Payload size of SX1276/77/78/79 is 255
 	while(1) {
 		TickType_t nowTick = xTaskGetTickCount();
-		int send_len = sprintf((char *)buf,"Je s'appelle Groot !! %"PRIu32, nowTick);
+		int send_len = sprintf((char *)buf,"kbssa123 %"PRIu32, nowTick);
 		lora_send_packet(buf, send_len);
 		ESP_LOGI(pcTaskGetName(NULL), "%d byte packet sent...", send_len);
 		int lost = lora_packet_lost();
